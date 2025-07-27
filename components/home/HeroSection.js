@@ -160,7 +160,7 @@ export default function HeroSection() {
         <video
           ref={iframeRef}
           className="absolute inset-0 z-0 w-full h-full object-cover"
-          src="/media15.mp4"
+          src="/media-hero.mp4"
           autoPlay
           loop
           muted
@@ -244,22 +244,7 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Hero Loader */}
-      {!isHeroLoaded && (
-        <div className="absolute inset-0 z-50 bg-black flex flex-col items-center justify-center hidden lg:flex">
-          <img
-            src="/logo.png"
-            alt="Infocus Media"
-            className="w-80 max-w-[60vw] mb-8 object-contain"
-          />
-          
-          <div className="flex space-x-1">
-            <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-            <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-            <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
-          </div>
-        </div>
-      )}
+      
     </div>
   );
 }
