@@ -170,8 +170,8 @@ const TopSection = () => {
           
           {/* Loading indicator */}
         {!isVideoLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black z-20">
-            <div className="text-white text-lg">Loading...</div>
+          <div className="absolute inset-0 flex items-center justify-center bg-white text-black z-20">
+            <div className=" text-lg">Loading...</div>
           </div>
         )}
       </section>
