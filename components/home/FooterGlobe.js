@@ -30,7 +30,7 @@ const FooterGlobe = () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: "top top", // Only starts when section reaches center
+          start: "top top", // Only starts when section reachestop
           end: () => `+=${duration * 300}`, // Dynamic end based on video duration
           scrub: 1,
           pin: true,

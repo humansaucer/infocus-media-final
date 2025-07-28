@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import Image from "next/image";
 
 const SpotLightClients = () => {
   const clients = [
@@ -30,13 +29,12 @@ const SpotLightClients = () => {
     { name: "Client 23", logo: "/assets/Clients/Frame 277.png" },
   ];
 
-  // Split into rows
   const row1 = clients.slice(0, 8);
   const row2 = clients.slice(8, 16);
   const row3 = clients.slice(16, 23);
 
   const ClientRow = ({ clients, reverse = false, duration = 800 }) => {
-    const duplicated = [...clients, ...clients]; // For seamless loop
+    const duplicated = [...clients, ...clients];
     const animation = {
       x: reverse ? ['-50%', '0%'] : ['0%', '-50%'],
     };
@@ -49,34 +47,44 @@ const SpotLightClients = () => {
           transition={{
             repeat: Infinity,
             repeatType: 'loop',
-            duration: 20,
+            duration: duration,
             ease: 'linear',
           }}
         >
           {duplicated.map((client, index) => (
-            <div
-              key={index}
-              className="flex-shrink-0  w-[154px] h-[84px] lg:w-[280px] lg:h-[156px] flex items-center justify-center p-4"
-            >
-              <img
-                src={client.logo}
-                alt={client.name}
-                
-                className="max-w-full max-h-full w-[170px] h-[170px] lg:w-[280px] lg:h-[155px] object-contain"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                }}
-              />
-            </div>
+            <ShimmeredLogo key={`${client.name}-${index}`} logo={client.logo} name={client.name} />
           ))}
         </motion.div>
       </div>
     );
   };
 
+  const ShimmeredLogo = ({ logo, name }) => {
+    const [loaded, setLoaded] = useState(false);
+
+    return (
+      <div className="flex-shrink-0 w-[154px] h-[84px] lg:w-[280px] lg:h-[156px] flex items-center justify-center p-4">
+        {!loaded && (
+          <div className="w-full h-full bg-gray-200 animate-pulse rounded-md" />
+        )}
+        <img
+          src={logo}
+          alt={name}
+          className={`max-w-full max-h-full w-[170px] h-[170px] lg:w-[280px] lg:h-[155px] object-contain transition-opacity duration-500 ${
+            loaded ? "opacity-100" : "opacity-0"
+          }`}
+          onLoad={() => setLoaded(true)}
+          onError={(e) => {
+            e.target.style.display = 'none';
+          }}
+        />
+      </div>
+    );
+  };
+
   return (
     <section className="py-20 bg-white">
-      <div className=" px-6">
+      <div className="px-6">
         <div className="text-center mb-12">
           <h2 className="text-[40px] md:text-[64px] font-bold text-black mb-4">
             Spotlighted Clients
@@ -90,7 +98,10 @@ const SpotLightClients = () => {
         <ClientRow clients={row3} reverse={false} duration={8} />
 
         <div className="text-center mt-10">
-          <Link href="/clients" className='bg-black text-white px-6 py-3 cursor-pointer hover:bg-gray-200 hover:text-black hover:scale-105 transition-transform duration-300 rounded-md font-medium text-[16px] md:text-[18px] lg:text-[22px]'>
+          <Link
+            href="/clients"
+            className="bg-black text-white px-6 py-3 cursor-pointer hover:bg-gray-200 hover:text-black hover:scale-105 transition-transform duration-300 rounded-md font-medium text-[16px] md:text-[18px] lg:text-[22px]"
+          >
             See All
           </Link>
         </div>
