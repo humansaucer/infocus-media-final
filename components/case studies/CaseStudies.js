@@ -81,7 +81,7 @@ const CaseStudies = () => {
                 <h3 className="text-[24px] md:text-[32px] lg:text-[40px] font-semibold text-black">
                   {item.title.toUpperCase()}
                 </h3>
-                <p className="text-black text-[16px] md:text-[18px] lg:text-[22px]">{item.description}</p>
+                <p className="text-black/50 text-[16px] md:text-[18px] lg:text-[22px] sub-heading">{item.description}</p>
               </div>
             </div>
           ))}

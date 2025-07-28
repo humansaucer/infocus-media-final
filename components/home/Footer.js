@@ -23,7 +23,7 @@ const Footer = () => {
 
         {/* Contact Info */}
         <div className="text-left md:text-right">
-          <p className="font-bold  text-[16px] md:text-[10px] lg:text-[18px]">+971 00 000 0000</p>
+          <p className="font-bold  text-[16px] md:text-[10px] lg:text-[18px]">+971 4 330 0409</p>
           <p className="font-bold uppercase text-[16px] md:text-[10px] lg:text-[18px] sub-heading">contact@infocusmedia.ae</p>
         </div>
       </div>

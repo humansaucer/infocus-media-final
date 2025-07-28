@@ -62,14 +62,14 @@ const CaseStudyDetail = () => {
           <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-12 mb-8 sm:mb-12">
             <div className="lg:w-1/2">
               <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-2 sm:mb-4">{selected.title}</h3>
-              <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-medium leading-relaxed">{selected.description}</p>
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-medium leading-relaxed ">{selected.description}</p>
             </div>
             <div className="lg:w-1/2 flex flex-col justify-center">
            
               {selected.content && (
             <div className="mb-8 sm:mb-12">
               <div 
-                className="prose prose-lg max-w-none text-gray-700"
+                className="prose prose-lg max-w-none text-gray-700 sub-heading"
                 dangerouslySetInnerHTML={{ __html: selected.content }}
               />
             </div>
@@ -107,7 +107,7 @@ const CaseStudyDetail = () => {
                 {/* Title and Description */}
                 <div className="mt-2 px-1">
                   <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-1 sm:mb-2">{item.title.toUpperCase()}</h3>
-                  <p className="text-gray-700 text-sm sm:text-base lg:text-lg leading-relaxed">{item.description}</p>
+                  <p className="text-gray-700 text-sm sm:text-base lg:text-lg leading-relaxed sub-heading">{item.description}</p>
                 </div>
               </div>
             ))}

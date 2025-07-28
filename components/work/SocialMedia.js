@@ -17,6 +17,10 @@ const SocialMedia = () => {
     setModalOpen(true);
   };
 
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   const handleToggle = () => {
     if (visibleCount >= socialMediaData.length) {
       setVisibleCount(2); // Collapse
@@ -49,7 +53,7 @@ const SocialMedia = () => {
                     onClick={() => openModal(item.image, idx)}
                     src={image}
                     alt={item.title}
-                    className=" w-full h-[161px] md:h-[216px] md:w-[216px] lg:h-[414px] lg:w-[414px] object-cover cursor-pointer"
+                    className="w-full h-[161px] md:h-[216px] md:w-[216px] lg:h-[414px] lg:w-[414px] object-cover cursor-pointer hover:opacity-80 hover:scale-105 transition-all duration-300"
                   />
                 ))}
               </div>
@@ -67,13 +71,12 @@ const SocialMedia = () => {
         </button>
       </div>
 
-      {modalOpen && (
-        <SocialMediaModal
-          images={selectedImages}
-          currentIndex={currentIndex}
-          onClose={() => setModalOpen(false)}
-        />
-      )}
+      <SocialMediaModal
+        images={selectedImages}
+        currentIndex={currentIndex}
+        onClose={closeModal}
+        isOpen={modalOpen}
+      />
     </div>
   );
 };

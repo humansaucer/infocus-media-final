@@ -81,7 +81,7 @@ const MembersSection = () => {
 
         {/* Text */}
         <div className="flex flex-col items-center justify-center w-full mt-4 z-10 leading-[.95]">
-          <p className="text-[16px] md:text-[28px] lg:text-[22px] text-black/50 font-semibold">
+          <p className="text-[16px] md:text-[28px] lg:text-[22px] text-black/50 font-semibold sub-heading">
             {data[0].occupation}
           </p>
           <h1 className="font-bold text-[29px] md:text-[64px] max-w-[620px] items-center text-center break-words whitespace-normal leading-tight">
@@ -102,7 +102,7 @@ const MembersSection = () => {
               alt="/"
               className="w-[400px] h-[400px] md:w-[350px] md:h-[350px] lg:max-w-[400px] lg:max-h-[400px] rounded-full"
             />
-            <p className="text-[16px] md:text-[28px] lg:text-[22px] text-black/50 font-semibold mt-4">
+            <p className="text-[16px] md:text-[28px] lg:text-[22px] text-black/50 font-semibold mt-4 sub-heading">
               {item.occupation}
             </p>
             <h1 className="font-bold text-[29px] md:text-[39px]">

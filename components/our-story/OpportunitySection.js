@@ -15,7 +15,7 @@ const OpportunitySection = () => {
       <div className="flex flex-col lg:flex-row justify-center gap-2  sub-heading">
         {/* Left Column */}
         <div className="flex flex-col items-center gap-4 w-full lg:w-1/2">
-          <p className="text-[18px] md:text-[20px] lg:text-[22px] font-medium">MAIN ASSOCIATIONS</p>
+          <p className="text-[18px] md:text-[20px] lg:text-[22px] font-medium ">MAIN ASSOCIATIONS</p>
 
           <div className="flex flex-wrap gap-4 justify-center w-full">
             {/* Card 1 */}

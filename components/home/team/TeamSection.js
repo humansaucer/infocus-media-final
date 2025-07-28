@@ -131,7 +131,7 @@ const [currentIndex, setCurrentIndex] = useState(ceoIndex);// Find the CEO's ind
                           : "max-w-[200px] max-h-[200px] md:max-w-[300px] md:max-h-[300px]"
                       }`}
                     />
-                    <p className="text-sm uppercase tracking-wider font-semibold mb-2">
+                    <p className="text-sm uppercase tracking-wider font-semibold mb-2 sub-heading">
                       {item.occupation}
                     </p>
                     <h3

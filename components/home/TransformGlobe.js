@@ -112,7 +112,7 @@ tl.to({}, { duration: 0.6 }) // Hold time
       <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
         {/* Transform content */}
         <div ref={transformContentRef} className="flex flex-col items-center justify-center absolute inset-0">
-          <p className="md:text-[18px] text-[16px] lg:text-[22px] font-bold uppercase text-black text-center mb-4">
+          <p className="md:text-[18px] text-[16px] lg:text-[22px] font-bold uppercase text-black text-center mb-4 sub-heading">
             WE don't see brands, we see possibilities
           </p>
           <div className="flex flex-col leading-[.95]">
@@ -123,14 +123,14 @@ tl.to({}, { duration: 0.6 }) // Hold time
               into visual stories
             </h1>
           </div>
-          <p className="md:text-[18px] text-[16px] lg:text-[22px] font-bold uppercase text-black text-center mt-4">
+          <p className="md:text-[18px] text-[16px] lg:text-[22px] font-bold uppercase text-black text-center mt-4 sub-heading">
             and we know what your brand needs
           </p>
         </div>
 
         {/* Insight content */}
         <div ref={insightContentRef} className="flex flex-col items-center justify-center absolute inset-0">
-          <p className="md:text-[18px] text-[16px] lg:text-[22px] font-bold uppercase text-black text-center mb-4">
+          <p className="md:text-[18px] text-[16px] lg:text-[22px] font-bold uppercase text-black text-center mb-4 sub-heading">
             we make your audience feel, think, and act
           </p>
           <div className="flex flex-col leading-[.95]">

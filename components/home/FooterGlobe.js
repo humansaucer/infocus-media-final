@@ -138,7 +138,7 @@ const FooterGlobe = () => {
 
       {/* Text on top of video */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10">
-        <p className="footer-text text-[16px] md:text-[18px] lg:text-[22px] font-bold uppercase tracking-widest mb-1">
+        <p className="footer-text text-[16px] md:text-[18px] lg:text-[22px] font-bold uppercase tracking-widest mb-1 sub-heading">
           HAVE PROJECT IN MIND?
         </p>
         <div className="flex flex-col items-center justify-center leading-[.95]">
