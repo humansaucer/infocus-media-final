@@ -32,7 +32,7 @@ const Page = () => {
     fetchData()
   }, [])
 
-  if(loading) return <div className="flex flex-col h-screen justify-center items-center"><Loader /></div>
+  if (loading) return <div className="flex flex-col h-screen justify-center items-center"><Loader /></div>
 
   return (
     <div className='flex flex-col px-6 pt-10'>
@@ -40,13 +40,13 @@ const Page = () => {
 
       {/* Tabs */}
       <div className='flex flex-col lg:flex-row items-center mb-3 sm:hidden'>
-<button
+        <button
           onClick={() => setActiveTab("Video Production")}
           className={`cursor-pointer mb-2 font-bold w-[160px] rounded-md text-[16px] md:text-[18px] lg:text-[22px] px-4 py-2 hover:bg-black hover:text-white ${activeTab === "Video Production" ? "bg-black text-white" : "text-gray-700 bg-gray-200"}`}
         >
           Video Production
         </button>
-    </div>
+      </div>
       <div className='flex font-bold flex-wrap items-center justify-center gap-4'>
         <button
           onClick={() => setActiveTab("Video Production")}
@@ -83,16 +83,16 @@ const Page = () => {
         </button>
       </div>
 
-      
 
 
-      { activeTab === "Video Production" && <VideoProduction />}
-      { activeTab === "Motion Graphics" && <MotionGraphics />}
-      { activeTab === "Social Media" && <SocialMedia />}
-      { activeTab === "Animation" && <Animation />}
-      { activeTab === "Event Coverage" && <EventCoverage />}
 
-        <Footer/>
+      {activeTab === "Video Production" && <VideoProduction />}
+      {activeTab === "Motion Graphics" && <MotionGraphics />}
+      {activeTab === "Social Media" && <SocialMedia />}
+      {activeTab === "Animation" && <Animation />}
+      {activeTab === "Event Coverage" && <EventCoverage />}
+
+      <Footer />
 
     </div>
   )

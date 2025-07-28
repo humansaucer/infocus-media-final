@@ -52,43 +52,70 @@ const MembersSection = () => {
   return (
     <div className="flex flex-col w-full px-2 py-20">
       <div className="flex flex-col items-center justify-center w-full relative">
-        {/* Shadow wrapper */}
-       <div
-  className="absolute w-[400px] h-[400px] rounded-full z-0 pointer-events-none"
-  style={{
-    top: 0,
-    left: "50%",
-    transform: "translateX(-50%)",
-    boxShadow: `
-      20px 0 40px -5px rgba(0, 128, 0, 0.6),     /* Green shadow on right */
-      25px 0 40px -10px rgba(255, 255, 0, 0.5),  /* Yellow shadow on right */
-      0 -15px 25px -10px rgba(255, 255, 0, 0.4), /* Top yellow glow */
-      0 15px 25px -10px rgba(0, 128, 0, 0.4)     /* Bottom green glow */
-    `,
-  }}
-/>
-
-
-
-        {/* Image */}
-        <div className="relative w-[400px] h-[400px] rounded-full overflow-hidden z-10">
-          <img
-            src={data[0].image}
-            alt="/"
-            className="w-full h-full object-cover rounded-full"
-          />
-        </div>
-
-        {/* Text */}
-        <div className="flex flex-col items-center justify-center w-full mt-4 z-10 leading-[.95]">
-          <p className="text-[16px] md:text-[28px] lg:text-[22px] text-black/50 font-semibold sub-heading">
-            {data[0].occupation}
-          </p>
-          <h1 className="font-bold text-[29px] md:text-[64px] max-w-[620px] items-center text-center break-words whitespace-normal leading-tight">
-            {data[0].name}
-          </h1>
-        </div>
+      {/* Multiple shadow layers for Safari compatibility */}
+      <div className="absolute w-[400px] h-[400px] rounded-full z-0 pointer-events-none top-0 left-1/2 transform -translate-x-1/2">
+        {/* Layer 1: Green shadow */}
+        <div 
+          className="absolute w-full h-full rounded-full opacity-60"
+          style={{
+            background: 'rgba(0, 128, 0, 0.44)',
+            filter: 'blur(20px)',
+            transform: 'translateX(20px)',
+          }}
+        />
+        
+        {/* Layer 2: Yellow shadow */}
+        <div 
+          className="absolute w-full h-full rounded-full opacity-70"
+          style={{
+            background: 'rgba(255, 255, 0, 0.35)',
+            filter: 'blur(25px)',
+            transform: 'translateX(25px)',
+          }}
+        />
+        
+        {/* Layer 3: Top glow */}
+        <div 
+          className="absolute w-full h-[200px] rounded-full opacity-60"
+          style={{
+            background: 'rgba(255, 255, 0, 0.45)',
+            filter: 'blur(15px)',
+            transform: 'translateY(-15px)',
+            top: '0',
+          }}
+        />
+        
+        {/* Layer 4: Bottom glow */}
+        <div 
+          className="absolute w-full h-[200px] rounded-full opacity-40"
+          style={{
+            background: 'rgba(0, 128, 0, 0.29)',
+            filter: 'blur(15px)',
+            transform: 'translateY(15px)',
+            bottom: '0',
+          }}
+        />
       </div>
+
+      {/* Image */}
+      <div className="relative w-[400px] h-[400px] rounded-full overflow-hidden z-10">
+        <img
+          src={data[0].image}
+          alt="/"
+          className="w-full h-full object-cover rounded-full"
+        />
+      </div>
+
+      {/* Text */}
+      <div className="flex flex-col items-center justify-center w-full mt-4 z-10 leading-[.95]">
+        <p className="text-[16px] md:text-[28px] lg:text-[22px] text-black/50 font-semibold sub-heading">
+          {data[0].occupation}
+        </p>
+        <h1 className="font-bold text-[29px] md:text-[64px] max-w-[620px] items-center text-center break-words whitespace-normal leading-tight">
+          {data[0].name}
+        </h1>
+      </div>
+    </div>
 
       {/* Other members */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-20 gap-2 mt-20">

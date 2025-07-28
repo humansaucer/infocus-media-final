@@ -67,7 +67,7 @@ const Location = () => {
       {/* Map or Illustration Section */}
       <div className="flex-1 w-full lg:w-1/2 relative overflow-hidden h-[60vh] md:h-[50vh] lg:h-[80vh]">
         {/* Address Overlay */}
-        <div className="absolute top-2 left-1/2 -translate-x-1/2 md:top-4 md:left-4 md:translate-x-0 bg-white p-3 md:p-8 w-[92vw] max-w-[568px] md:w-[568px] z-10 m-5 sub-heading">
+        <div className="absolute top-2 left-2 md:top-4 md:left-4 md:translate-x-0 bg-white p-3 md:p-8  max-w-[568px] md:w-[500px] z-10 m-5 sub-heading">
           <div className="font-semibold text-gray-500 text-base md:text-xl uppercase mb-3 md:mb-4 tracking-wide">ADDRESS</div>
           <div className="font-black font-semibold text-black text-lg md:text-2xl uppercase leading-tight mb-2">OFFICE 221, AL HANNA CENTER,<br/>DUBAI, UAE</div>
           <div className="font-semibold text-black text-base md:text-xl">(04) 3300 409</div>

@@ -156,7 +156,7 @@ export default function HeroSection() {
       className="relative w-screen overflow-hidden"
     >
       {/* Large Screens (Desktop) */}
-      <div className="hidden lg:block h-screen">
+      <div className="h-screen">
         <video
           ref={iframeRef}
           className="absolute inset-0 z-0 w-full h-full object-cover"
@@ -219,20 +219,18 @@ export default function HeroSection() {
       </div>
 
       {/* Tablet Screens */}
-      <div 
-        ref={tabletTextRef}
+      {/* <div 
         className="hidden md:flex lg:hidden min-h-[160vh] h-screen bg-white flex-col justify-center items-center"
       >
-        <div className="mt-[-20vh] flex justify-center tablet-text">
+        <div className="mt-[-17vh] flex justify-center tablet-text">
           <h1 className="text-[55vw] font-bold text-black rotate-90 leading-none">
             Infocus Media <span className="text-[12vw] align-super">®</span>
           </h1>
         </div>
-      </div>
+      </div> */}
 
       {/* Mobile Screens */}
-      <div 
-        ref={mobileTextRef}
+      {/* <div 
         className="md:hidden min-h-[330vh] h-screen bg-white flex flex-col justify-center items-center"
       >
         <div className="flex mt-[-5vh] justify-center mobile-text">
@@ -242,7 +240,7 @@ export default function HeroSection() {
             </h1>
           </div>
         </div>
-      </div>
+      </div> */}
 
       
     </div>

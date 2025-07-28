@@ -11,31 +11,31 @@ const Clients = () => {
     { name: "Client 4", logo: "/assets/Clients/Frame 257.png" },
     { name: "Client 5", logo: "/assets/Clients/Frame 258.png" },
     { name: "Client 6", logo: "/assets/Clients/Frame 254-1.png" },
-    
-    { name: "Client 8", logo: "/assets/Clients/Frame 278.png" }, 
-    { name: "Client 9", logo: "/assets/Clients/Frame 256-1.png" }, 
-    { name: "Client 10", logo: "/assets/Clients/Frame 257-1.png" }, 
-    { name: "Client 11", logo: "/assets/Clients/Frame 258-1.png" }, 
-    { name: "Client 12", logo: "/assets/Clients/Frame 259.png" }, 
-    
+
+    { name: "Client 8", logo: "/assets/Clients/Frame 278.png" },
+    { name: "Client 9", logo: "/assets/Clients/Frame 256-1.png" },
+    { name: "Client 10", logo: "/assets/Clients/Frame 257-1.png" },
+    { name: "Client 11", logo: "/assets/Clients/Frame 258-1.png" },
+    { name: "Client 12", logo: "/assets/Clients/Frame 259.png" },
+
     { name: "Client 14", logo: "/assets/Clients/Frame 265.png" },
-    { name: "Client 15", logo: "/assets/Clients/Frame 261.png" }, 
-    { name: "Client 16", logo: "/assets/Clients/Frame 262.png" }, 
-    { name: "Client 17", logo: "/assets/Clients/Frame 263.png" }, 
+    { name: "Client 15", logo: "/assets/Clients/Frame 261.png" },
+    { name: "Client 16", logo: "/assets/Clients/Frame 262.png" },
+    { name: "Client 17", logo: "/assets/Clients/Frame 263.png" },
     { name: "Client 18", logo: "/assets/Clients/Frame 264.png" },
-   
-    { name: "Client 20", logo: "/assets/Clients/Frame 265.png" }, 
-    { name: "Client 21", logo: "/assets/Clients/Frame 266.png" }, 
+
+    { name: "Client 20", logo: "/assets/Clients/Frame 265.png" },
+    { name: "Client 21", logo: "/assets/Clients/Frame 266.png" },
     { name: "Client 22", logo: "/assets/Clients/Frame 267.png" },
     { name: "Client 23", logo: "/assets/Clients/Frame 268.png" },
     { name: "Client 24", logo: "/assets/Clients/Frame 269.png" },
-    
+
     { name: "Client 26", logo: "/assets/Clients/Frame 270.png" },
     { name: "Client 27", logo: "/assets/Clients/Frame 254.png" },
     { name: "Client 28", logo: "/assets/Clients/Frame 277.png" },
     { name: "Client 29", logo: "/assets/Clients/Frame 273.png" },
     { name: "Client 30", logo: "/assets/Clients/Frame 274.png" },
-   
+
     { name: "Client 32", logo: "/assets/Clients/Frame 275.png" },
     { name: "Client 33", logo: "/assets/Clients/Frame 276.png" },
     { name: "Client 34", logo: "/assets/Clients/Frame 277.png" },
@@ -58,7 +58,7 @@ const Clients = () => {
         ).length;
         setColumns(count);
       }
-      
+
       // Check if screen is below sm (640px) and hide button accordingly
       setShowButton(window.innerWidth >= 640);
     };
@@ -72,10 +72,10 @@ const Clients = () => {
     const items = [];
     const clientsToShow = showButton ? clients.length + 1 : clients.length;
     const totalSlots = Math.ceil(clientsToShow / columns) * columns;
-    
+
     // For 3-column layout (below md), place button in middle of last row
     const shouldPlaceButtonInMiddle = columns === 3 && showButton;
-    const buttonPosition = shouldPlaceButtonInMiddle 
+    const buttonPosition = shouldPlaceButtonInMiddle
       ? Math.floor((totalSlots - columns) + (columns / 2)) // Middle of last row
       : showButton ? clients.length : -1; // After all clients for other layouts, -1 if no button
 
@@ -83,7 +83,7 @@ const Clients = () => {
       const clientIndex = showButton && i >= buttonPosition && buttonPosition !== -1 ? i - 1 : i;
       const isButtonSlot = showButton && i === buttonPosition && buttonPosition !== -1;
       const isClient = clientIndex < clients.length && !isButtonSlot;
-      
+
       if (isButtonSlot) {
         // Render button
         const isFirstColumn = i % columns === 0;
@@ -118,7 +118,7 @@ const Clients = () => {
 
 
 
-        
+
         items.push(
           <div
             key={clientIndex}
@@ -163,7 +163,7 @@ const Clients = () => {
         );
       }
     }
-    
+
     return items;
   };
 
@@ -173,13 +173,15 @@ const Clients = () => {
 
       <div
         ref={gridRef}
-        className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-5 w-full"
+        className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-5 w-full"
       >
         {renderGridItems()}
       </div>
-      <div className="sm:hidden w-full flex items-center justify-center"><Link href={"/contacts"} className="bg-black text-white px-6 py-3 text-xs md:px-6 md:py-3 cursor-pointer hover:bg-gray-200 hover:text-black hover:scale-105 transition-transform duration-300 rounded-md md:font-medium text-[12px] md:text-[16px] lg:text-[18px]">
-              Join Them
-            </Link></div>
+      <div className="sm:hidden w-full flex items-center justify-center">
+        <Link href={"/contacts"} className="bg-black text-white px-6 px-6 py-3 text-xs md:px-6 md:py-3 cursor-pointer hover:bg-gray-200 hover:text-black hover:scale-105 transition-transform duration-300 rounded-md text-[12px] md:text-[16px] xl:text-[18px]">
+          Join Them
+        </Link>
+      </div>
     </section>
   );
 };

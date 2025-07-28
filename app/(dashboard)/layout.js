@@ -30,7 +30,7 @@ export default function CMSLayout({ children }) {
             {/* Main Content */}
             <main
               className={`ml-20 transition-all duration-300 overflow-y-auto w-full px-6 py-4 ${
-                isCollapsed ? `ml-[80px]` : `ml-[336px]`
+                isCollapsed ? `ml-[80px]` : `ml-[280px]`
               }`}
             >
               {children}
