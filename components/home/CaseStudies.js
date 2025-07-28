@@ -54,7 +54,7 @@ const CaseStudies = () => {
             >
               {loading ? (
                 <>
-                  <div className="w-full h-[242px] md:h-[487px] lg:h-[480px] bg-gray-200 animate-pulse rounded-md" />
+                  <div className="w-full p-[100px] h-[242px] md:h-[487px] lg:h-[480px] bg-gray-200 animate-pulse rounded-md" />
                   <div className="mt-2 px-1">
                     <div className="h-8 w-3/4 bg-gray-200 animate-pulse rounded mb-2" />
                     <div className="h-4 w-full bg-gray-100 animate-pulse rounded" />
