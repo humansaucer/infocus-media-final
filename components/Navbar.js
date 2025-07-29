@@ -420,7 +420,7 @@ const Navbar = () => {
               priority
             />
             {/* White logo overlay */}
-            <Image
+            {(menuOpen &&  !isScrolled) && <Image
               src="/logo.png"
               onClick={() => setMenuOpen(false)}
               alt="Infocus Media Logo"
@@ -430,7 +430,7 @@ const Navbar = () => {
                 menuOpen || isDarkBg ? 'opacity-100' : 'opacity-0'
               }`}
               priority
-            />
+            />}
           </Link>
         </div>
 

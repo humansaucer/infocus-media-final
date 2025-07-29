@@ -115,7 +115,7 @@ const CaseStudyDetail = () => {
           
           <div className="text-center mb-8">
             <button
-              className="bg-black text-white px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded hover:bg-gray-100 hover:text-black hover:scale-105 transition-transform duration-300 font-medium text-base sm:text-lg lg:text-xl"
+              className="bg-black text-white px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded hover:bg-gray-100 hover:text-black hover:scale-105 transition-transform duration-300 font-medium text-base sm:text-lg lg:text-xl cursor-pointer"
               onClick={() => router.push("/case-studies")}
             >
               See All

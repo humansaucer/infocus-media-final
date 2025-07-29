@@ -1,27 +1,54 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import Loader from '../Loader'
 
-const data = [
-  {
-    title: "EHS",
-    image: "/projects/35.png",
-  },
-  {
-    title: "Dhubai Culture",
-    image: "/assets/event2.png",
-  },
-  {
-    title: "EHE",
-    image: "/assets/event3.png",
-  },
-  {
-    title: "DPC Emirati Content Creator",
-    image: "/assets/event4.png",
-  },
-]
+// const data = [
+//   {
+//     title: "EHS",
+//     image: "/projects/35.png",
+//   },
+//   {
+//     title: "Dhubai Culture",
+//     image: "/assets/event2.png",
+//   },
+//   {
+//     title: "EHE",
+//     image: "/assets/event3.png",
+//   },
+//   {
+//     title: "DPC Emirati Content Creator",
+//     image: "/assets/event4.png",
+//   },
+// ]
 
 const EventCoverage = () => {
   const INITIAL_COUNT = 4;
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
+  const [category, setCategory] = useState("event-coverage")
+  const [loading, setLoading] = useState(true)
+  const [data, setData] = useState([])
+
+
+
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(`/api/work/get-works?category=${category}`);
+      setData(res.data.works || []);
+      console.log(res.data.works)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  if (loading) return <div className="flex flex-col h-screen justify-center items-center"><Loader /></div>
+
+
 
   const handleToggle = () => {
     if (visibleCount >= data.length) {
@@ -51,11 +78,14 @@ const EventCoverage = () => {
 
               {/* Image */}
               <div className='w-full md:w-3/4'>
-                <img
-                  src={item.image}
-                  alt={item.title || 'Case Study'}
-                  className='w-full  h-[191px] md:h-[383px] lg:h-[750px]'
-                />
+              <iframe
+                src={`https://player.vimeo.com/video/${item.videoLink?.split("/").pop()}`}
+                title={item.title || "Case Study"}
+                className='w-full  h-[191px] md:h-[383px] lg:h-[750px]'
+                frameBorder="0"
+                allow="autoplay; fullscreen"
+                allowFullScreen
+              />
               </div>
             </div>
           </React.Fragment>

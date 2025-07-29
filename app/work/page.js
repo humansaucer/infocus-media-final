@@ -13,27 +13,10 @@ import Loader from '@/components/Loader'
 
 const Page = () => {
   const [activeTab, setActiveTab] = useState("Social Media")
-  const [loading, setLoading] = useState(true)
-  const [data, setData] = useState([])
+  
+  
 
-  const fetchData = async () => {
-    try {
-      const res = await axios.get("/api/work/get-works");
-      setData(res.data.works || []);
-      console.log(res.data.works)
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    fetchData()
-  }, [])
-
-  if (loading) return <div className="flex flex-col h-screen justify-center items-center"><Loader /></div>
-
+  
   return (
     <div className='flex flex-col px-6 pt-10'>
       <p className='py-20 text-center text-[40px] md:text-[64px] lg:text-[64px] font-bold'>Our Works</p>

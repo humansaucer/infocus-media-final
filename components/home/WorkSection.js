@@ -46,7 +46,7 @@ const WorkSection = () => {
         </div>
 
         <div
-          className="grid grid-cols-2 lg:grid-cols-7 w-full items-center justify-items-center gap-8"
+          className="grid grid-cols-2 lg:grid-cols-7 w-full md:pl-0 pl-5 items-center justify-items-center gap-8"
           onMouseLeave={() => setHoveredIndex(null)} 
         >
           {services.map((service, index) => (

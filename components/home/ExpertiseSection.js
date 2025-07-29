@@ -13,7 +13,7 @@ const ExpertiseSection = () => {
 
         const handleTimeUpdate = () => {
           if (video.duration - video.currentTime <= 1) {
-            video.currentTime = 0.9; // loop back after last second
+            video.currentTime = 0.7; // loop back after last second
           }
         };
 

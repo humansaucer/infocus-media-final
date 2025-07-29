@@ -57,20 +57,7 @@ const Page = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
         {data.slice(0, visibleItems).map((item) => (
           <div key={item._id} className="bg-white rounded-lg shadow-md overflow-hidden border">
-            <div className="flex justify-end gap-3 p-3 border-b bg-gray-50">
-              <Link
-                href={`/case-study/${item._id}`}
-                className="text-black flex items-center gap-1 text-sm"
-              >
-                <FaEdit size={14} /> Edit
-              </Link>
-              <button
-                onClick={() => handleDelete(item._id)}
-                className="text-black flex items-center gap-1 text-sm"
-              >
-                <FaTrash size={14} /> Delete
-              </button>
-            </div>
+            
 
             <div className="relative group">
               <img
@@ -91,6 +78,21 @@ const Page = () => {
             <div className="p-4">
               <h3 className="text-lg font-bold text-gray-900 mb-2">{item.title?.toUpperCase()}</h3>
               <p className="text-gray-600 text-sm">{item.description}</p>
+            </div>
+
+            <div className="flex justify-end gap-3 p-3 ">
+              <Link
+                href={`/case-study/${item._id}`}
+                className="text-black flex items-center gap-1 text-sm"
+              >
+                <FaEdit size={14} /> Edit
+              </Link>
+              <button
+                onClick={() => handleDelete(item._id)}
+                className="text-black flex items-center gap-1 text-sm"
+              >
+                <FaTrash size={14} /> Delete
+              </button>
             </div>
           </div>
         ))}

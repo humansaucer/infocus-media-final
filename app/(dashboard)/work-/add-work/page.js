@@ -10,10 +10,11 @@ const AddWorkPage = () => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [notification, setNotification] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmit = async (workData) => {
     try {
-      setIsLoading(true);
+      setIsSubmitting(true);
       const response = await fetch('/api/work/create', {
         method: 'POST',
         headers: {
@@ -46,7 +47,7 @@ const AddWorkPage = () => {
         type: "error"
       });
     } finally {
-      setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -57,7 +58,7 @@ const AddWorkPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-      {isLoading && <Loader />}
+      {isSubmitting && <Loader />}
       <WorkModal
         isOpen={isModalOpen}
         onClose={handleClose}

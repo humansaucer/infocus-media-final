@@ -43,6 +43,9 @@ const SocialMediaModal = ({ images, currentIndex, onClose, isOpen }) => {
     e.stopPropagation(); // Prevent modal from closing when clicking inside it
   };
 
+
+  console.log(images);
+
   return (
     <AnimatePresence mode="wait">
       {isOpen && (
@@ -81,7 +84,7 @@ const SocialMediaModal = ({ images, currentIndex, onClose, isOpen }) => {
                   <FaChevronLeft className="text-white text-xl" />
                 </button>
 
-                <span className="text-white text-lg font-medium">
+                <span className="text-black text-lg font-medium">
                   {index + 1} / {images.length}
                 </span>
 

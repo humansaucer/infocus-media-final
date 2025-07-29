@@ -1,15 +1,43 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SocialMediaModal from "./SocialMediaModal";
-import { socialMediaData } from "@/utils/data";
+// import { socialMediaData } from "@/utils/data";
+import axios from "axios";
+import Loader from "../Loader";
 
 const SocialMedia = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  const [category, setCategory] = useState("social-media")
   const [visibleCount, setVisibleCount] = useState(4); // Show first 4 items initially
+
+
+
+  const [loading, setLoading] = useState(true)
+  const [data, setData] = useState([])
+
+
+
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(`/api/work/get-works?category=${category}`);
+      setData(res.data.works || []);
+      console.log(res.data.works)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  if (loading) return <div className="flex flex-col h-screen justify-center items-center"><Loader /></div>
+
 
   const openModal = (images, index) => {
     setSelectedImages(images);
@@ -22,17 +50,17 @@ const SocialMedia = () => {
   };
 
   const handleToggle = () => {
-    if (visibleCount >= socialMediaData.length) {
+    if (visibleCount >= data.length) {
       setVisibleCount(2); // Collapse
     } else {
-      setVisibleCount(socialMediaData.length); // Expand
+      setVisibleCount(data.length); // Expand
     }
   };
 
   return (
     <div className="flex flex-col w-full">
       <div className="flex flex-col w-full gap-8 ">
-        {socialMediaData.slice(0, visibleCount).map((item, index) => (
+        {data.slice(0, visibleCount).map((item, index) => (
           <React.Fragment key={index}>
             <div className="w-full h-[1px] bg-gray-200 my-6"></div>
 
@@ -47,10 +75,10 @@ const SocialMedia = () => {
               </div>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {item.image.map((image, idx) => (
+                {item.images.map((image, idx) => (
                   <img
                     key={idx}
-                    onClick={() => openModal(item.image, idx)}
+                    onClick={() => openModal(item.images, idx)}
                     src={image}
                     alt={item.title}
                     className="w-full h-[161px] md:h-[216px] md:w-[216px] lg:h-[414px] lg:w-[414px] object-cover cursor-pointer hover:opacity-80 hover:scale-105 transition-all duration-300"
@@ -63,12 +91,12 @@ const SocialMedia = () => {
       </div>
 
       <div className="flex justify-center items-center mt-10">
-        <button
+        {data.length > 4 && <button
           onClick={handleToggle}
           className="bg-black text-white px-6 py-3 cursor-pointer hover:bg-gray-200 hover:text-black hover:scale-105 transition-transform duration-300 rounded-md font-medium text-[16px] md:text-[18px] lg:text-[22px]"
         >
-          {visibleCount >= socialMediaData.length ? "See Less" : "See More"}
-        </button>
+          {visibleCount >= data.length ? "See Less" : "See More"}
+        </button>}
       </div>
 
       <SocialMediaModal

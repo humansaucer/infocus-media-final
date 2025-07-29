@@ -39,7 +39,9 @@ export default function Home() {
       <TransformGlobe/>    
       <TeamSection/>
       <Location/>
+      
       <FooterGlobe/>
+      
       <Footer/>
     </div>
   );
