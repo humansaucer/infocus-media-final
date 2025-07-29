@@ -393,21 +393,21 @@ const Navbar = () => {
       {/* Navbar */}
       <nav
         ref={navbarRef}
-        className="fixed  left-0 w-full  sm:h-[48px] z-50 px-4 sm:px-6 py-7 sm:py-10 flex items-center justify-between transition-all bg-transparent"
+        className={`fixed  left-0 w-full  sm:h-[48px] z-50 px-4 sm:px-6 py-7 sm:py-10 flex items-center justify-between transition-all bg-transparent ${menuOpen ? "bg-black" : "bg-white"}`}
       >
         {/* Logo with ref */}
         <div ref={logoRef} className="w-36 sm:w-32 md:w-48 lg:w-60 relative transition-colors duration-100">
           <Link href={"/"}>
             {/* Black logo as fallback */}
             <Image
-              src="/logo-black.png"
+              src={menuOpen ? "/logo.png" : "/logo-black.png"}
               alt="Infocus Media Logo"
               width={250}
               height={68}
               className="w-full h-auto object-contain absolute top-0 left-0"
               priority
             />
-            {/* White logo overlay */}
+            {/* White logo overlay
             <Image
               src="/logo.png"
               onClick={() => setMenuOpen(false)}
@@ -418,7 +418,7 @@ const Navbar = () => {
                 menuOpen || isDarkBg ? 'opacity-100' : 'opacity-0'
               }`}
               priority
-            />
+            /> */}
           </Link>
         </div>
 

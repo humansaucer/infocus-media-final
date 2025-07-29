@@ -26,19 +26,26 @@ const FooterGlobe = () => {
       gsap.set(".footer-heading", { opacity: 0, y: 40 });
       gsap.set(".footer-button", { opacity: 0, y: 20 });
 
-      // Create timeline with proper pinning
+      // Create timeline with delayed start
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: "top top", // Only starts when section reachestop
+          
+          start: window.innerWidth < 768 ? "top+=10% top" : "top top", 
+          
+          
           end: () => `+=${duration * 300}`, // Dynamic end based on video duration
           scrub: 1,
           pin: true,
           anticipatePin: 1,
-          pinSpacing: true, // Ensures proper spacing after pin
+          pinSpacing: true,
           refreshPriority: -1,
           invalidateOnRefresh: true,
           id: "footer-globe-video",
+          
+          // Add markers for debugging (remove in production)
+          // markers: true,
+          
           onStart: () => {
             console.log("Footer animation started");
           },
@@ -62,7 +69,7 @@ const FooterGlobe = () => {
         },
       });
 
-      // Animation sequence
+      // Animation sequence with better timing
       tl.to({}, { duration: 0.1 }) // Brief hold at start
         // Animate video playback
         .to(video, {
@@ -90,12 +97,12 @@ const FooterGlobe = () => {
           duration: 0.2,
           ease: "power2.out"
         }, 0.45)
-        // Optional: Add slight video scale for emphasis
-        .to(video, {
-          scale: 1.02,
-          duration: 0.2,
-          ease: "power1.inOut"
-        }, 0.6);
+        // // Optional: Add slight video scale for emphasis
+        // .to(video, {
+        //   scale: 1.02,
+        //   duration: 0.2,
+        //   ease: "power1.inOut"
+        // }, 0.6);
     };
 
     video.addEventListener("loadeddata", handleLoadedData);
