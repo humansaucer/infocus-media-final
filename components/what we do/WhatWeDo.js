@@ -2,12 +2,14 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const WhatWeDo = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [columns, setColumns] = useState(2);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   const gridRef = useRef(null);
+  const router = useRouter();
 
   const services = [
     {
@@ -129,7 +131,10 @@ const WhatWeDo = () => {
                     }
                   `}
                 >
-                  <div className="flex lg:flex-col justify-between h-full ">
+                  <div className="flex lg:flex-col justify-between h-full " onClick={() => {
+                    if(service.title === "SOCIAL MEDIA MANAGEMENT") {
+                     router.push("/work");
+                  }}}>
                     {service.icon && <Image
                       src={service.icon}
                       alt={service.title}
