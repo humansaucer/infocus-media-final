@@ -338,6 +338,8 @@ const Navbar = () => {
   const iconColor = menuOpen ? "white" : (isDarkBg ? "white" : "black");
   const bgColor = menuOpen ? "bg-black" : "bg-gray-200";
   const bgColor1 = menuOpen ? "bg-white" : "bg-black";
+
+  const activeLink = menuItems.find((item) => item.href === pathname);
   
   return (
     <>
@@ -371,7 +373,8 @@ const Navbar = () => {
                       onClick={() => setMenuOpen(false)}
                       onMouseEnter={() => setHoveredIndex(index)}
                       onMouseLeave={() => setHoveredIndex(null)}
-                      className={`transition-colors duration-200 md:text-[32px] text-[40px] lg:text-[74px] ${
+                      className={`transition-colors duration-200 md:text-[52px] text-[40px] lg:text-[74px] ${activeLink === item.href ? "text-white" : ""} ${
+                        activeLink !== item.href &&
                         hoveredIndex !== null && hoveredIndex !== index
                           ? "text-white/30"
                           : "text-white hover:text-gray-300"
