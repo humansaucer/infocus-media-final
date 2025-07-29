@@ -51,7 +51,7 @@ const data = [
 const MembersSection = () => {
   return (
     <div className="flex flex-col w-full px-2 py-20">
-      <div className="flex flex-col items-center justify-center w-full relative">
+      <div className="flex flex-col items-center justify-center w-full relative overflow-x-hidden sm:overflow-x-visible">
       {/* Multiple shadow layers for Safari compatibility */}
       <div className="absolute w-[400px] h-[400px] rounded-full z-0 pointer-events-none top-0 left-1/2 transform -translate-x-1/2">
         {/* Layer 1: Green shadow */}
@@ -98,7 +98,7 @@ const MembersSection = () => {
       </div>
 
       {/* Image */}
-      <div className="relative w-[400px] h-[400px] rounded-full overflow-hidden z-10">
+      <div className="relative max-w-[400px] max-h-[400px] rounded-full overflow-hidden z-10">
         <img
           src={data[0].image}
           alt="/"
