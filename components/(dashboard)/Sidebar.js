@@ -12,14 +12,21 @@ import {
   FiBriefcase,
 } from "react-icons/fi";
 import { useState } from "react";
+import Image from "next/image";
+import { useAuth } from "@/context/AuthContext";
 
 const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
   const router = useRouter();
+  const { logout } = useAuth();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
-      router.push("/signin");
+      logout(); // Clear auth state and localStorage
+      // Use replace to avoid back navigation issues and add small delay
+      setTimeout(() => {
+        router.replace("/");
+      }, 200);
     } catch (error) {
       console.error("Logout error:", error);
     }
@@ -27,7 +34,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
 
   const navItems = [
     { label: "Case Studies", href: "/portal", icon: <FiFolder size={20} /> },
-    { label: "Work", href: "/work-", icon: <FiBriefcase size={20} /> },
+    { label: "Work", href: "/work-management", icon: <FiBriefcase size={20} /> },
     { label: "Users", href: "/users", icon: <FiUsers size={20} /> },
     { label: "Profile", href: "/profile", icon: <FiUser size={20} /> },
   ];
@@ -53,8 +60,11 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
         {/* Sidebar Content */}
         <div className="p-4 overflow-y-auto flex-grow">
           {/* Header */}
-          <div className="flex justify-between items-center mb-8">
-            {!isCollapsed && <span className="font-bold text-xl">CMS</span>}
+          <div className="flex justify-between items-center mb-12">
+            {!isCollapsed && <Link href="/">
+              <Image src="/logo-black.png" alt="logo" width={100} height={100} />
+              
+            </Link>}
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
               className="p-2 rounded hover:bg-gray-100 transition hidden md:block"
@@ -62,6 +72,8 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
               {isCollapsed ? <FiMenu size={22} /> : <FiX size={22} />}
             </button>
           </div>
+
+          
 
           {/* Navigation */}
           <div className="flex flex-col gap-4">

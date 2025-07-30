@@ -6,6 +6,7 @@ import { FiPlus, FiEdit, FiTrash2, FiEye } from "react-icons/fi";
 import WorkModal from "@/components/(dashboard)/WorkModal";
 import Notification from "@/components/Notification";
 import Loader from "@/components/Loader";
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 const WorkPage = () => {
   const [works, setWorks] = useState([]);
@@ -14,6 +15,9 @@ const WorkPage = () => {
   const [editingWork, setEditingWork] = useState(null);
   const [notification, setNotification] = useState(null);
   const [filter, setFilter] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(6); // 6 items per page
 
   const categories = [
     { value: 'all', label: 'All Categories' },
@@ -127,9 +131,28 @@ const WorkPage = () => {
     setEditingWork(null);
   };
 
-  const filteredWorks = works.filter(work => 
-    filter === 'all' || work.category === filter
-  );
+  const filteredWorks = works.filter(work => {
+    const matchesCategory = filter === 'all' || work.category === filter;
+    const matchesSearch = work.title.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  // Pagination calculations
+  const totalPages = Math.ceil(filteredWorks.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentWorks = filteredWorks.slice(startIndex, endIndex);
+
+  // Reset pagination when filters change
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+    setCurrentPage(1);
+  };
+
+  const handleSearchChange = (searchValue) => {
+    setSearchTerm(searchValue);
+    setCurrentPage(1);
+  };
 
   const formatCategoryName = (category) => {
     return category.split('-').map(word => 
@@ -187,17 +210,28 @@ const WorkPage = () => {
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center md:flex-row flex-col mb-6">
         <div>
           <h1 className="text-3xl font-bold">Work Management</h1>
           <p className="text-gray-600 mt-1">Manage your portfolio work across different categories</p>
         </div>
-        <Link href="/work-/add-work">
+        <Link href="/work-management/add-work">
           <button className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition">
             <FiPlus size={18} />
             Add Work
           </button>
         </Link>
+      </div>
+
+      {/* Search Bar */}
+      <div className="mb-6">
+        <input
+          type="text"
+          placeholder="Search works by name..."
+          value={searchTerm}
+          onChange={(e) => handleSearchChange(e.target.value)}
+          className="w-full md:w-1/3 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+        />
       </div>
 
       {/* Filter */}
@@ -206,7 +240,7 @@ const WorkPage = () => {
           {categories.map(category => (
             <button
               key={category.value}
-              onClick={() => setFilter(category.value)}
+              onClick={() => handleFilterChange(category.value)}
               className={`px-4 py-2 rounded text-sm transition ${
                 filter === category.value
                   ? 'bg-black text-white'
@@ -220,7 +254,7 @@ const WorkPage = () => {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
         <div className="bg-white p-4 rounded-lg shadow border">
           <div className="text-2xl font-bold text-blue-600">{works.length}</div>
           <div className="text-sm text-gray-600">Total Works</div>
@@ -240,9 +274,12 @@ const WorkPage = () => {
       {filteredWorks.length === 0 ? (
         <div className="text-center py-12">
           <div className="text-gray-500 text-lg mb-4">
-            {filter === 'all' ? 'No works found' : `No works found in ${formatCategoryName(filter)}`}
+            {searchTerm ? 
+              `No works found matching "${searchTerm}"${filter !== 'all' ? ` in ${formatCategoryName(filter)}` : ''}` 
+              : (filter === 'all' ? 'No works found' : `No works found in ${formatCategoryName(filter)}`)
+            }
           </div>
-    <Link href="/work-/add-work">
+    <Link href="/work-management/add-work">
             <button className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition">
               Add Your First Work
             </button>
@@ -250,7 +287,7 @@ const WorkPage = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredWorks.map(work => {
+          {currentWorks.map(work => {
             const primaryMedia = getPrimaryMedia(work);
             
             return (
@@ -299,7 +336,7 @@ const WorkPage = () => {
                 <h3 className="font-semibold text-lg mb-1">{work.title}</h3>
                 <p className="text-gray-600 text-sm mb-2">{work.client}</p>
                 {work.location && (
-                  <p className="text-gray-500 text-xs mb-2">📍 {work.location}</p>
+                  <p className="text-gray-500 text-xs mb-2"><FaMapMarkerAlt className="inline-block mr-1" /> {work.location}</p>
                 )}
                 
                 <div className="flex justify-between items-center mt-4 pt-3 border-t">
@@ -327,6 +364,76 @@ const WorkPage = () => {
             </div>
             );
           })}
+        </div>
+      )}
+
+      {/* Pagination */}
+      {filteredWorks.length > 0 && totalPages > 1 && (
+        <div className="flex justify-center items-center mt-8 gap-2">
+          <button
+            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 rounded ${
+              currentPage === 1
+                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+            }`}
+          >
+            Previous
+          </button>
+
+          {/* Page Numbers */}
+          {[...Array(totalPages)].map((_, index) => {
+            const pageNumber = index + 1;
+            const isVisible = 
+              pageNumber === 1 || 
+              pageNumber === totalPages || 
+              (pageNumber >= currentPage - 2 && pageNumber <= currentPage + 2);
+            
+            if (!isVisible) {
+              if (pageNumber === currentPage - 3 || pageNumber === currentPage + 3) {
+                return (
+                  <span key={pageNumber} className="px-2 text-gray-400">
+                    ...
+                  </span>
+                );
+              }
+              return null;
+            }
+
+            return (
+              <button
+                key={pageNumber}
+                onClick={() => setCurrentPage(pageNumber)}
+                className={`px-4 py-2 rounded ${
+                  currentPage === pageNumber
+                    ? 'bg-black text-white'
+                    : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                {pageNumber}
+              </button>
+            );
+          })}
+
+          <button
+            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-2 rounded ${
+              currentPage === totalPages
+                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+            }`}
+          >
+            Next
+          </button>
+        </div>
+      )}
+
+      {/* Results Info */}
+      {filteredWorks.length > 0 && (
+        <div className="flex justify-center mt-4 text-sm text-gray-600">
+          Showing {startIndex + 1}-{Math.min(endIndex, filteredWorks.length)} of {filteredWorks.length} works
         </div>
       )}
 

@@ -1,17 +1,25 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
+import Loader from "@/components/Loader";
 
 const SignInPage = () => {
-  const { login } = useAuth();
+  const { login, isAuthenticated, loading: authLoading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (!authLoading && isAuthenticated) {
+      router.push("/portal");
+    }
+  }, [isAuthenticated, authLoading, router]);
 
   const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
@@ -25,15 +33,37 @@ const SignInPage = () => {
     setLoading(true);
 
     try {
-      await login(data);
-      router.push("/portal");
+      const result = await login(data);
+      if (result.success) {
+        router.push("/portal");
+      } else {
+        setError(result.error);
+      }
     } catch (err) {
       console.error(err);
-      setError(err.response?.data?.error || "Something went wrong");
+      setError("Something went wrong");
     } finally {
       setLoading(false);
     }
   };
+
+  // Show loading while checking authentication
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader />
+      </div>
+    );
+  }
+
+  // Don't render signin form if already authenticated
+  if (isAuthenticated) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row bg-white text-black">
