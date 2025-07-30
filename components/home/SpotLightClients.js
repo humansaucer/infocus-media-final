@@ -5,29 +5,40 @@ import Image from "next/image";
 
 const SpotLightClients = () => {
   const clients = [
-    { name: "Client 1", logo: "/assets/Clients/Frame 254.png" },
-    { name: "Client 2", logo: "/assets/Clients/Frame 255.png" },
-    { name: "Client 3", logo: "/assets/Clients/Frame 256.png" },
-    { name: "Client 4", logo: "/assets/Clients/Frame 257.png" },
-    { name: "Client 5", logo: "/assets/Clients/Frame 258.png" },
-    { name: "Client 6", logo: "/assets/Clients/Frame 260.png" },
-    { name: "Client 7", logo: "/assets/Clients/Frame 261.png" },
-    { name: "Client 8", logo: "/assets/Clients/Frame 262.png" },
-    { name: "Client 9", logo: "/assets/Clients/Frame 263.png" },
-    { name: "Client 10", logo: "/assets/Clients/Frame 264.png" },
-    { name: "Client 11", logo: "/assets/Clients/Frame 265.png" },
-    { name: "Client 12", logo: "/assets/Clients/Frame 266.png" },
-    { name: "Client 13", logo: "/assets/Clients/Frame 267.png" },
-    { name: "Client 14", logo: "/assets/Clients/Frame 268.png" },
-    { name: "Client 15", logo: "/assets/Clients/Frame 269.png" },
-    { name: "Client 16", logo: "/assets/Clients/Frame 270.png" },
-    { name: "Client 17", logo: "/assets/Clients/Frame 271.png" },
-    { name: "Client 18", logo: "/assets/Clients/Frame 272.png" },
-    { name: "Client 19", logo: "/assets/Clients/Frame 273.png" },
-    { name: "Client 20", logo: "/assets/Clients/Frame 274.png" },
-    { name: "Client 21", logo: "/assets/Clients/Frame 275.png" },
-    { name: "Client 22", logo: "/assets/Clients/Frame 276.png" },
-    { name: "Client 23", logo: "/assets/Clients/Frame 277.png" },
+    { name: "Client 1", logo: "/assets/Clients/Frame-254.png" },
+    { name: "Client 2", logo: "/assets/Clients/Frame-255.png" },
+    { name: "Client 3", logo: "/assets/Clients/Frame-256.png" },
+    { name: "Client 4", logo: "/assets/Clients/Frame-257.png" },
+    { name: "Client 5", logo: "/assets/Clients/Frame-258.png" },
+    { name: "Client 6", logo: "/assets/Clients/Frame-254-1.png" },
+
+    { name: "Client 8", logo: "/assets/Clients/Frame-278.png" },
+    { name: "Client 9", logo: "/assets/Clients/Frame-256-1.png" },
+    { name: "Client 10", logo: "/assets/Clients/Frame-257-1.png" },
+    { name: "Client 11", logo: "/assets/Clients/Frame-258-1.png" },
+    { name: "Client 12", logo: "/assets/Clients/Frame-259.png" },
+
+    { name: "Client 14", logo: "/assets/Clients/Frame-265.png" },
+    { name: "Client 15", logo: "/assets/Clients/Frame-261.png" },
+    { name: "Client 16", logo: "/assets/Clients/Frame-262.png" },
+    { name: "Client 17", logo: "/assets/Clients/Frame-263.png" },
+    { name: "Client 18", logo: "/assets/Clients/Frame-264.png" },
+
+    { name: "Client 20", logo: "/assets/Clients/Frame-265.png" },
+    { name: "Client 21", logo: "/assets/Clients/Frame-266.png" },
+    { name: "Client 22", logo: "/assets/Clients/Frame-267.png" },
+    { name: "Client 23", logo: "/assets/Clients/Frame-268.png" },
+    { name: "Client 24", logo: "/assets/Clients/Frame-269.png" },
+
+    { name: "Client 26", logo: "/assets/Clients/Frame-270.png" },
+    { name: "Client 27", logo: "/assets/Clients/Frame-254.png" },
+    { name: "Client 28", logo: "/assets/Clients/Frame-277.png" },
+    { name: "Client 29", logo: "/assets/Clients/Frame-273.png" },
+    { name: "Client 30", logo: "/assets/Clients/Frame-274.png" },
+
+    { name: "Client 32", logo: "/assets/Clients/Frame-275.png" },
+    { name: "Client 33", logo: "/assets/Clients/Frame-276.png" },
+    { name: "Client 34", logo: "/assets/Clients/Frame-277.png" },
   ];
 
   // Split into rows
@@ -58,11 +69,13 @@ const SpotLightClients = () => {
               key={index}
               className="flex-shrink-0  w-[154px] h-[84px] lg:w-[280px] lg:h-[156px] flex items-center justify-center p-4"
             >
-              <img
+              <Image
                 src={client.logo}
                 alt={client.name}
                 
                 className="max-w-full max-h-full w-[170px] h-[170px] lg:w-[280px] lg:h-[155px] object-contain"
+                width={100}
+                height={100}
                 onError={(e) => {
                   e.target.style.display = 'none';
                 }}
