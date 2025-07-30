@@ -47,6 +47,7 @@ const Navbar = () => {
   const scrollTimeout = useRef(null);
   const rafId = useRef(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [logoWhite, setLogoWhite] = useState(false);
 
   // Force check on route change
   useEffect(() => {
@@ -320,12 +321,19 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
+      if(pathname === "/team" || pathname === "/what-we-do") {
+        if(window.scrollY < 10) {
+          setLogoWhite(true);
+        } else {
+          setLogoWhite(false);
+        }
+      }
       setIsScrolled(window.scrollY > 10); // Change `10` to adjust trigger point
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [pathname]);
   
 
   useEffect(() => {
@@ -412,15 +420,17 @@ const Navbar = () => {
           <Link href={"/"}>
             {/* Black logo as fallback */}
             <Image
-              src="/logo-black.png"
+              src={menuOpen ? "/logo.png" : "/logo-black.png"}
               alt="Infocus Media Logo"
               width={250}
               height={68}
               className="w-full h-auto object-contain absolute top-0 left-0"
               priority
             />
+
+
             {/* White logo overlay */}
-            {(menuOpen &&  !isScrolled) && <Image
+            {(logoWhite) && <Image
               src="/logo.png"
               onClick={() => setMenuOpen(false)}
               alt="Infocus Media Logo"
