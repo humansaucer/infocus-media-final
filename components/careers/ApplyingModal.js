@@ -3,7 +3,7 @@ import React from 'react';
 const ApplyingModal = ({ id, title, onClose, onApplySuccess }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (onApplySuccess) onApplySuccess();
+    // if (onApplySuccess) onApplySuccess();
     onClose();
   };
 
@@ -53,7 +53,7 @@ const ApplyingModal = ({ id, title, onClose, onApplySuccess }) => {
             Apply
           </button>
           <button
-            type="submit"
+            
             onClick={onClose}
             className="cursor-pointer mt-4 bg-gray-300 text-black px-6 py-3 rounded-md hover:opacity-90 transition"
           >
