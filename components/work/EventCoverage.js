@@ -81,7 +81,7 @@ const EventCoverage = () => {
               <iframe
                 src={`https://player.vimeo.com/video/${item.videoLink?.split("/").pop()}`}
                 title={item.title || "Case Study"}
-                className='w-full  h-[191px] md:h-[383px] lg:h-[750px]'
+                className='w-full  h-[620px] md:h-[750px] object-cover'
                 frameBorder="0"
                 allow="autoplay; fullscreen"
                 allowFullScreen
