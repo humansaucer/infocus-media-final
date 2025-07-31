@@ -20,7 +20,7 @@ import {
 } from "react-icons/fa";
 import Notification from "@/components/Notification";
 import { useEditor } from "@tiptap/react";
-import upload from "@/utils/uploads";
+
 
 const EditorContent = dynamic(() => import("@tiptap/react").then(mod => mod.EditorContent), { ssr: false });
 
@@ -74,17 +74,27 @@ const CaseStudyPage = () => {
     const file = e.target.files[0];
     if (!file) return;
 
-
     showNotification("Uploading image...");
 
     try {
       setUploading(true);
-      const url = await upload(file);
-      setData((prev) => ({ ...prev, image: url }));
+      
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await axios.post("/api/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      const { secure_url } = response.data;
+      setData((prev) => ({ ...prev, image: secure_url }));
       showNotification("Image uploaded successfully!");
-      console.log(url);
+      console.log(secure_url);
       setError("");
-    } catch {
+    } catch (error) {
+      console.error("Upload error:", error);
       setError("Image upload failed in case study page");
       showNotification("Image upload failed in case study", "error");
     } finally {

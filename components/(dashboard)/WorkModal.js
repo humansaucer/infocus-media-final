@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { FiX, FiPlus, FiMinus, FiUpload } from "react-icons/fi";
-import upload from "@/utils/uploads";
+import axios from "axios";
 
 const categories = [
   { value: 'video-production', label: 'Video Production', description: '1 video link' },
@@ -84,9 +84,18 @@ const WorkModal = ({ isOpen, onClose, onSubmit, initialData, setNotification }) 
     setUploadingImages(true);
 
     try {
-      const url = await upload(file);
-      setFormData({ ...formData, images: [...formData.images, url] });
-      console.log('Image uploaded:', url);
+      const uploadFormData = new FormData();
+      uploadFormData.append("file", file);
+
+      const response = await axios.post("/api/upload", uploadFormData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      const { secure_url } = response.data;
+      setFormData(prev => ({ ...prev, images: [...prev.images, secure_url] }));
+      console.log('Image uploaded:', secure_url);
     } catch (error) {
       console.error('Upload error:', error);
       setNotification({

@@ -1,31 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
-
 const ExpertiseSection = () => {
-  const videoRefs = [useRef(null), useRef(null), useRef(null)];
-
-  useEffect(() => {
-    videoRefs.forEach((ref) => {
-      const video = ref.current;
-      if (video) {
-        video.currentTime = 0.5; // skip first half second
-
-        const handleTimeUpdate = () => {
-          if (video.duration - video.currentTime <= 1) {
-            video.currentTime = 0.7; // loop back after last second
-          }
-        };
-
-        video.addEventListener("timeupdate", handleTimeUpdate);
-
-        return () => {
-          video.removeEventListener("timeupdate", handleTimeUpdate);
-        };
-      }
-    });
-  }, []);
-
   return (
     <section className="relative top-0 w-full bg-white pt-20 mb-20">
       <div className="w-full overflow-hidden">
@@ -36,15 +11,15 @@ const ExpertiseSection = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row items-center justify-center w-full overflow-hidden">
-          {["Visuals.mp4", "Animation2.mp4", "Production_3.mp4"].map(
+          {["Visuals.mp4", "Animation2.mp4", "Production.mp4"].map(
             (src, i) => (
               <div key={i} className="w-full lg:w-1/3 h-screen">
                 <video
-                  ref={videoRefs[i]}
                   src={`/expertise-animations/${src}`}
                   className="w-full h-full object-cover"
                   autoPlay
                   muted
+                  loop
                   playsInline
                 />
               </div>

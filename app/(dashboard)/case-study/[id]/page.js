@@ -21,7 +21,7 @@ import {
   FaImage,
   FaArrowLeft,
 } from "react-icons/fa";
-import upload from "@/utils/uploads";
+
 
 // Toolbar button component
 const ToolbarButton = ({ onClick, isActive, icon: Icon, label }) => (
@@ -97,10 +97,21 @@ const Page = () => {
 
     try {
       setUploading(true);
-      const url = await upload(file);
-      setData((prev) => ({ ...prev, image: url }));
+      
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await axios.post("/api/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      const { secure_url } = response.data;
+      setData((prev) => ({ ...prev, image: secure_url }));
       showNotification("Image uploaded successfully");
-    } catch {
+    } catch (error) {
+      console.error("Upload error:", error);
       setError("Image upload failed");
       showNotification("Image upload failed", "error");
     } finally {
