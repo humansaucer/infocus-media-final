@@ -1,11 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
-import dynamic from "next/dynamic";
-const EditorContent = dynamic(() => import("@tiptap/react").then(mod => mod.EditorContent));
-const useEditor = dynamic(() => import("@tiptap/react").then(mod => mod.useEditor));
+import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import TextAlign from "@tiptap/extension-text-align";
@@ -25,6 +23,7 @@ import {
 } from "react-icons/fa";
 import upload from "@/utils/uploads";
 
+// Toolbar button component
 const ToolbarButton = ({ onClick, isActive, icon: Icon, label }) => (
   <button
     type="button"
@@ -57,25 +56,36 @@ const Page = () => {
     setTimeout(() => setNotification({ message: "", type: "" }), 3000);
   };
 
+  // Initialize TipTap editor
   const editor = useEditor({
     extensions: [StarterKit, Link, TextAlign.configure({ types: ["heading", "paragraph"] })],
     content: "",
-    onCreate: async ({ editor }) => {
+    onUpdate: ({ editor }) => {
+      setData((prev) => ({ ...prev, content: editor.getHTML() }));
+    },
+  });
+
+  // Fetch data on mount
+  useEffect(() => {
+    const fetchData = async () => {
       try {
         const res = await axios.get(`/api/${id}`);
         const caseStudy = res.data.caseStudy;
         setData(caseStudy);
-        editor.commands.setContent(caseStudy.content || "");
+
+        // Set editor content after data is loaded
+        if (editor && caseStudy.content) {
+          editor.commands.setContent(caseStudy.content);
+        }
       } catch {
         setError("Failed to load data");
       } finally {
         setLoading(false);
       }
-    },
-    onUpdate: ({ editor }) => {
-      setData((prev) => ({ ...prev, content: editor.getHTML() }));
-    },
-  });
+    };
+
+    fetchData();
+  }, [id, editor]);
 
   const handleInputChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -90,7 +100,6 @@ const Page = () => {
       const url = await upload(file);
       setData((prev) => ({ ...prev, image: url }));
       showNotification("Image uploaded successfully");
-      console.log(url);
     } catch {
       setError("Image upload failed");
       showNotification("Image upload failed", "error");
@@ -114,7 +123,13 @@ const Page = () => {
     }
   };
 
-  if (loading) return <div className="flex h-screen justify-center items-center"><Loader /></div>;
+  if (loading) {
+    return (
+      <div className="flex h-screen justify-center items-center">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="p-8 max-w-4xl mx-auto">
@@ -122,7 +137,10 @@ const Page = () => {
         <Notification message={notification.message} type={notification.type} />
       )}
 
-      <div className="flex items-center gap-2 mb-6 cursor-pointer text-black hover:text-gray-700" onClick={() => window.history.back()}>
+      <div
+        className="flex items-center gap-2 mb-6 cursor-pointer text-black hover:text-gray-700"
+        onClick={() => window.history.back()}
+      >
         <FaArrowLeft size={20} />
         <span className="font-medium">Back</span>
       </div>
@@ -158,27 +176,33 @@ const Page = () => {
         {/* Content */}
         <div>
           <label className="block mb-2 font-medium">Content</label>
-          <div className="flex gap-2 mb-3 flex-wrap">
-            <ToolbarButton onClick={() => editor?.chain().focus().toggleBold().run()} isActive={editor?.isActive("bold")} icon={FaBold} label="Bold" />
-            <ToolbarButton onClick={() => editor?.chain().focus().toggleItalic().run()} isActive={editor?.isActive("italic")} icon={FaItalic} label="Italic" />
-            <ToolbarButton onClick={() => editor?.chain().focus().toggleBulletList().run()} isActive={editor?.isActive("bulletList")} icon={FaListUl} label="Bulleted List" />
-            <ToolbarButton onClick={() => editor?.chain().focus().toggleBlockquote().run()} isActive={editor?.isActive("blockquote")} icon={FaQuoteRight} label="Quote" />
-            <ToolbarButton onClick={() => editor?.chain().focus().setTextAlign("left").run()} isActive={editor?.isActive({ textAlign: "left" })} icon={FaAlignLeft} label="Align Left" />
-            <ToolbarButton onClick={() => editor?.chain().focus().setTextAlign("center").run()} isActive={editor?.isActive({ textAlign: "center" })} icon={FaAlignCenter} label="Align Center" />
-            <ToolbarButton onClick={() => editor?.chain().focus().setTextAlign("right").run()} isActive={editor?.isActive({ textAlign: "right" })} icon={FaAlignRight} label="Align Right" />
-            <ToolbarButton
-              onClick={() => {
-                const url = prompt("Enter URL");
-                if (url) editor?.chain().focus().toggleLink({ href: url }).run();
-              }}
-              isActive={editor?.isActive("link")}
-              icon={FaLink}
-              label="Insert Link"
-            />
-          </div>
-          <div className="border rounded bg-white p-3 min-h-[200px]">
-            <EditorContent editor={editor} />
-          </div>
+          {editor ? (
+            <>
+              <div className="flex gap-2 mb-3 flex-wrap">
+                <ToolbarButton onClick={() => editor.chain().focus().toggleBold().run()} isActive={editor.isActive("bold")} icon={FaBold} label="Bold" />
+                <ToolbarButton onClick={() => editor.chain().focus().toggleItalic().run()} isActive={editor.isActive("italic")} icon={FaItalic} label="Italic" />
+                <ToolbarButton onClick={() => editor.chain().focus().toggleBulletList().run()} isActive={editor.isActive("bulletList")} icon={FaListUl} label="Bulleted List" />
+                <ToolbarButton onClick={() => editor.chain().focus().toggleBlockquote().run()} isActive={editor.isActive("blockquote")} icon={FaQuoteRight} label="Quote" />
+                <ToolbarButton onClick={() => editor.chain().focus().setTextAlign("left").run()} isActive={editor.isActive({ textAlign: "left" })} icon={FaAlignLeft} label="Align Left" />
+                <ToolbarButton onClick={() => editor.chain().focus().setTextAlign("center").run()} isActive={editor.isActive({ textAlign: "center" })} icon={FaAlignCenter} label="Align Center" />
+                <ToolbarButton onClick={() => editor.chain().focus().setTextAlign("right").run()} isActive={editor.isActive({ textAlign: "right" })} icon={FaAlignRight} label="Align Right" />
+                <ToolbarButton
+                  onClick={() => {
+                    const url = prompt("Enter URL");
+                    if (url) editor.chain().focus().toggleLink({ href: url }).run();
+                  }}
+                  isActive={editor.isActive("link")}
+                  icon={FaLink}
+                  label="Insert Link"
+                />
+              </div>
+              <div className="border rounded bg-white p-3 min-h-[200px]">
+                <EditorContent editor={editor} />
+              </div>
+            </>
+          ) : (
+            <p>Loading editor...</p>
+          )}
         </div>
 
         {/* Image Upload */}
