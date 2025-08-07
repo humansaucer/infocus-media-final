@@ -448,8 +448,8 @@ const Navbar = () => {
         {/* Icons */}
         <div className="flex items-center justify-center gap-2 sm:gap-4">
           {/* Contact Icon Button */}
-          <Link href="/contacts" className={`p-1.5 sm:p-2 rounded-sm transition cursor-pointer ${bgColor1}`}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="sm:w-6 sm:h-6">
+          <Link href="/contacts" className={`p-1.5 h-12 w-12 sm:w-[64px] sm:h-[64px] flex flex-col items-center justify-center rounded-sm transition cursor-pointer ${bgColor1}`}>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" className="sm:w-[24px] sm:h-[24px]">
               <path
                 d="M21 3H3V16H6.6V21L12.45 16.7368H21V3Z"
                 stroke={menuOpen ? "black" : "white"}
@@ -461,10 +461,10 @@ const Navbar = () => {
           {/* Hamburger / Close Icon */}
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
-            className={`p-1.5 sm:p-2 rounded-sm transition cursor-pointer ${bgColor}`}
+            className={`p-1.5 h-12 w-12 sm:w-[64px] sm:h-[64px] flex flex-col items-center justify-center rounded-sm transition cursor-pointer ${bgColor}`}
           >
             {menuOpen ? (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="sm:w-5 sm:h-5">
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" className="sm:w-[24px] sm:h-[24px]">
                 <line
                   x1="3"
                   y1="3"
@@ -483,7 +483,7 @@ const Navbar = () => {
                 />
               </svg>
             ) : (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="sm:w-6 sm:h-6">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" className="sm:w-[24px] sm:h-[24px]">
                 <line y1="4" x2="24" y2="4" stroke="black" strokeWidth="3" />
                 <line y1="12" x2="24" y2="12" stroke="black" strokeWidth="3" />
                 <line y1="20" x2="24" y2="20" stroke="black" strokeWidth="3" />

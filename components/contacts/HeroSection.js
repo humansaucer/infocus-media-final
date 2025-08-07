@@ -2,7 +2,7 @@ import React from 'react'
 
 const HeroSection = () => {
   return (
-    <div className='bg-[#FAFAFA] px-6 md:py-24 max-sm:pt-24 max-sm:pb-8 md:pt-32 flex flex-col justify-end'>
+    <div className='bg-[#FAFAFA] px-6 md:py-24 max-sm:pt-24 max-sm:pb-8 h-[75vh] md:pt-32 flex flex-col justify-end'>
       <div className='flex flex-col lg:flex-row items-start lg:items-center gap-8 lg:gap-5 mt-20'>
         <div className='w-full lg:w-1/2'>
           <h1 className='text-[40px] md:text-[56px] lg:text-[64px] font-bold leading-tight'>
@@ -10,7 +10,7 @@ const HeroSection = () => {
           </h1>
         </div>
 
-        <div className='w-full lg:w-1/2 space-y-2 md:space-y-3 sub-heading'>
+        <div className='w-full lg:w-1/2  space-y-2 md:space-y-3 sub-heading'>
           <h2 className='text-[16px] font-bold md:text-[18px] lg:text-[22px] font-semibold uppercase tracking-wide'>
             contact@infocusmedia.ae
           </h2>

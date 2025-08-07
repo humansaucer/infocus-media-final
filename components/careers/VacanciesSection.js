@@ -7,7 +7,7 @@ const vacancies = [
   {
     id: 1,
     title: "3D Animator",
-    location: "Dubai, UAE",
+    location: "Remote",
     type: "Full-time",
     rote:
       "You’ll be responsible for bringing ideas to life through stunning 3D animations, visual storytelling, and motion graphics for digital campaigns, product visuals, and brand content.",
@@ -23,7 +23,7 @@ const vacancies = [
   {
     id: 3,
     title: "Visual Editor",
-    location: "Dubai, UAE",
+    location: "Remote",
     type: "Part-time",
     rote:
       "Edit compelling videos and help bring the vision of the creative team to life using After Effects and Premiere Pro.",
@@ -105,7 +105,7 @@ const VacanciesSection = () => {
         ) : (
           <>
             <div className="text-center mb-24">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[54px] lg:text-[100px]">
+              <h2 className="font-bold mb-6 text-[40px] md:text-[64px]">
                 Our Vacancies
               </h2>
             </div>
@@ -120,7 +120,7 @@ const VacanciesSection = () => {
                     className="flex items-center justify-between p-4 cursor-pointer transition-all duration-300 ease-in-out hover:bg-gray-50"
                     onClick={() => toggleOpen(job.id)}
                   >
-                    <h3 className="text-lg font-semibold">{job.title}</h3>
+                    <h3 className="text-[22px] md:text-[40px] font-bold">{job.title}</h3>
                     <div className="relative w-5 h-5 flex items-center justify-center">
                       {/* horizontal bar */}
                       <div className="absolute w-full h-[2px] bg-black transition-transform duration-300 ease-in-out" />
@@ -136,17 +136,17 @@ const VacanciesSection = () => {
                       ? 'max-h-96 opacity-100' 
                       : 'max-h-0 opacity-0'
                   }`}>
-                    <div className="p-4 border-t border-gray-200 bg-white text-sm space-y-2 transform transition-transform duration-300 ease-in-out">
-                      <div className="w-full flex flex-col md:flex-row text-[16px] md:text-[18px] lg:[text-22px] justify-between gap-4">
+                    <div className="p-4 border-t border-gray-50 bg-white text-sm space-y-2 transform transition-transform duration-300 ease-in-out">
+                      <div className="w-full flex flex-col mt-4 mb-6 md:flex-row text-[16px] md:text-[18px] lg:[text-22px] justify-between gap-4">
                         <div className="w-full">
-                          <p className="font-bold text-[16px] md:text-[18px] lg:[text-22px] sub-heading tracking-wide text-gray-400">
+                          <p className="font-bold mb-2 text-[16px] md:text-[18px] lg:[text-22px] sub-heading tracking-wide text-black/50">
                             LOCATION
                           </p>
                           <p>{job.location}</p>
                         </div>
 
                         <div className="w-full">
-                          <p className="font-bold text-[16px] md:text-[18px] lg:[text-22px] sub-heading tracking-wide text-gray-400">
+                          <p className="font-bold mb-2 text-[16px] md:text-[18px] lg:[text-22px] sub-heading tracking-wide text-black/50">
                             EMPLOYMENT TYPE
                           </p>
                           <p className="sub-heading">{job.type}</p>
@@ -154,7 +154,7 @@ const VacanciesSection = () => {
                       </div>
 
                       <div>
-                        <p className="font-bold sub-heading tracking-wide mt-5 text-[16px] md:text-[18px] lg:[text-22px] text-gray-400">ABOUT ROLE</p>
+                        <p className="font-bold sub-heading tracking-wide mt-8 mb-3 text-[16px] md:text-[18px] lg:[text-22px] text-black/50">ABOUT ROLE</p>
                         <p className="text-[16px] md:text-[18px] lg:[text-22px] sub-heading">{job.rote}</p>
                       </div>
 

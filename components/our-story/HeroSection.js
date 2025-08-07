@@ -74,9 +74,9 @@ const HeroSection = () => {
           className="absolute bottom-0 left-0 w-full h-1/2 md:h-full md:pt-10 object-cover z-0 md:top-auto"
         />
 
-        <div className="relative w-full flex items-center justify-between">
+        <div className="relative w-full  flex items-center justify-between">
           {/* Left Stats */}
-          <div className="absolute top-1/2 -translate-y-1/2 left-0 z-10 w-full md:w-2/5 pl-6 lg:pl-20 sm:pl-[20px] flex flex-col lg:flex-row lg:items-center items-start justify-between gap-6">
+          <div className="absolute top-[90%] h-full -translate-y-1/2 left-0 z-10 w-full md:w-2/5 pl-6 lg:pl-20 sm:pl-[20px] flex flex-col  items-start justify-between gap-6">
             <div className="flex flex-col">
               <h1
                 data-bg="dark"
@@ -108,7 +108,7 @@ const HeroSection = () => {
           </div>
 
           {/* Right Stats */}
-          <div className="absolute top-1/2  -translate-y-1/2 right-0 z-10 w-full md:w-2/5 lg:pr-20 pr-[20px] sm:pr-20 flex flex-col lg:flex-row lg:items-center items-end justify-between gap-6">
+          <div className="absolute top-[90%] h-full  -translate-y-1/2 right-0 z-10 w-full md:w-2/5 lg:pr-20 pr-[20px] sm:pr-20 flex flex-col items-end justify-between gap-6">
             <div data-bg="dark" className="flex flex-col items-end">
               <h1
                 data-bg="dark"
