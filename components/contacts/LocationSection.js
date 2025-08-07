@@ -21,7 +21,7 @@ const LocationSection = () => {
             fontWeight: 700
           }}
         >
-          OFFICE 221, AL HANNA CENTER,<br/>DUBAI, UAE
+          OFFICE 221, AL HANAA CENTER,<br/>DUBAI, UAE
         </div>
         <div 
           className="text-black text-base md:text-xl"
