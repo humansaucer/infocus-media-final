@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Loader from '../Loader';
+import Lenis from "@studio-freight/lenis";
 
 // const data = [
 //   { title: "MOHaP", image: "/assets/production1.png" },
@@ -14,6 +15,32 @@ const VideoProduction = () => {
   const [category, setCategory] = useState("video-production")
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([])
+
+
+  useEffect(() => {
+        const lenis = new Lenis({
+          duration: 0.6, // Very short
+          easing: (t) => 1 - Math.pow(1 - t, 3), // easeOutCubic - quick stop
+          smooth: true,
+          smoothTouch: false,
+          infinite: false,
+          gestureDirection: "vertical",
+          wheelMultiplier: 0.8, // Reduce wheel sensitivity
+          touchMultiplier: 1.0,
+        });
+    
+        let frame;
+        const raf = (time) => {
+          lenis.raf(time);
+          frame = requestAnimationFrame(raf);
+        };
+        frame = requestAnimationFrame(raf);
+    
+        return () => {
+          cancelAnimationFrame(frame);
+          lenis.destroy();
+        };
+      }, []);
 
 
 
@@ -64,7 +91,7 @@ const VideoProduction = () => {
               </div>
 
               {/* Image */}
-              <div className='w-full lg:w-2/3 h-[191px] md:h-[383px] lg:h-[750px]'>
+              <div className='w-full lg:w-2/3 h-[191px] md:h-[383px] lg:h-[750px]' data-lenis-prevent>
               <iframe
                 src={`https://player.vimeo.com/video/${item.videoLink?.split("/").pop()}`}
                 title={item.title || "Case Study"}

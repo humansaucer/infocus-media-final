@@ -10,9 +10,9 @@ const menuItems = [
   { name: "HOME", href: "/" },
   { name: "OUR STORY", href: "/story" },
   { name: "CLIENTS", href: "/clients" },
-  { name: "WHAT WE DO", href: "/what-we-do" },
+  // { name: "WHAT WE DO", href: "/what-we-do" },
   { name: "CASE STUDIES", href: "/case-studies" },
-  { name: "WORK", href: "/work" },
+  { name: "OUR WORK", href: "/work" },
   { name: "CAREERS", href: "/careers" },
   { name: "TEAM", href: "/team" },
   { name: "CONTACTS", href: "/contacts" },
@@ -322,6 +322,7 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       if(pathname === "/team" || pathname === "/what-we-do") {
+        setLogoWhite(true);
         if(window.scrollY < 10) {
           setLogoWhite(true);
         } else {
@@ -413,7 +414,7 @@ const Navbar = () => {
       {/* Navbar */}
       <nav
         ref={navbarRef}
-        className={`fixed  left-0 w-full sm:h-[48px] z-50 px-4 sm:px-6 py-7 sm:py-10 flex items-center justify-between transition-all bg-transparent ${menuOpen ? "bg-black" : isScrolled ? "bg-white" : "bg-transparent"}`}
+        className={`fixed  left-0 w-full sm:h-[48px] z-50 px-4 sm:px-6 py-7 sm:py-10 flex items-center justify-between transition-all ${!menuOpen ? "bg-white/30 backdrop-blur-md" : "bg-transparent"}`}
       >
         {/* Logo with ref */}
         <div ref={logoRef} className="w-36 mb-4 bg-red-300 sm:w-32 md:w-48 lg:w-60 relative transition-colors duration-100">

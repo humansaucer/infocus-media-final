@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import CaseStudies from "../CaseStudies";
 import ExpertiseSection from "../ExpertiseSection";
+import Image from "next/image";
 
 const SheikhCaseStudiesContainer = () => {
   const [currentWord, setCurrentWord] = useState(0);
@@ -48,7 +49,9 @@ const SheikhCaseStudiesContainer = () => {
         <div className="w-full h-full flex flex-col-reverse lg:flex-row lg:items-center gap-10 bg-white">
           {/* Image Container */}
           <div className="w-full md:w-2/3 h-[50vh] md:h-[65vh] lg:h-full">
-            <img
+            <Image
+              width={500}
+              height={500}
               src="/assets/portrait.png"
               alt="Portrait"
               className="w-full h-full object-cover"
@@ -56,7 +59,7 @@ const SheikhCaseStudiesContainer = () => {
           </div>
 
           {/* Text Container */}
-          <div className="w-full lg:w-1/2 text-black lg:items-center font-bandeins-strange px-2 flex text-left sm:text-left md:text-left lg:text-left text-[40px] md:text-[54px] lg:text-[100px] leading-[.99]">
+          <div className="w-full lg:w-1/2 text-black lg:items-center font-bandeins-strange px-2 flex text-left sm:text-left md:text-left lg:text-left text-[40px] md:text-[54px] lg:text-[80px] leading-[.99]">
             <div className="flex flex-col gap-0">
               <h1 className="text-green-500 font-bold md:ml-[-230px] lg:ml-0">"</h1>
               <h1 className="font-bold">The future</h1>

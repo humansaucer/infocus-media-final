@@ -7,7 +7,7 @@ const OpportunitySection = () => {
       <div className="text-center leading-[.99]">
         <h1 className="text-[40px] md:text-[64px] font-bold">Unlocking opportunities</h1>
         <h1 className="text-[40px] md:text-[64px] font-bold ">
-          through strategic partnership
+          through strategic partnerships
         </h1>
       </div>
 
@@ -32,7 +32,9 @@ const OpportunitySection = () => {
               <img src="/our-story/image2.png" alt="logo" className="w-[80px] h-[80px] mb-4 object-fit" />
               <div>
                 <p className="font-semibold">DONE BY YOUTH</p>
-                <p className="leading-[1.2]">Connecting passionate young talents with nationwide opportunities to shape UAE's future.</p>
+                <p className="leading-[1.2]">Connecting passionate young talents with 
+nationwide opportunities to shape the UAE’s 
+future.</p>
               </div>
             </div>
 
@@ -41,7 +43,9 @@ const OpportunitySection = () => {
               <img src="/our-story/image3.png" alt="logo" className="w-[100px] h-[100px]  object-contain" />
               <div>
                 <p className="font-bold">ICV</p>
-                <p className="leading-[1.2]">Strengthening UAE's economy by prioritizing local talent, products, and services across industrial sectors.</p>
+                <p className="leading-[1.2]">Strengthening the UAE’s economy by 
+prioritizing local talent, products, and services 
+across industrial sectors.</p>
               </div>
             </div>
           </div>

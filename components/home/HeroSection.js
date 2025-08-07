@@ -9,37 +9,22 @@ gsap.registerPlugin(ScrollTrigger);
 export default function HeroSection() {
   const sectionRef = useRef(null);
   const textRef = useRef(null);
-  const iframeRef = useRef(null);
+  const videoRef = useRef(null);
+  const secondVideoRef = useRef(null);
+  const contentOverlayRef = useRef(null);
   const mobileTextRef = useRef(null);
   const tabletTextRef = useRef(null);
   const [isHeroLoaded, setIsHeroLoaded] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
-  // Handle iframe loading
-  useEffect(() => {
-    const iframe = iframeRef.current;
-    
-    if (iframe) {
-      const handleIframeLoad = () => {
-        setTimeout(() => {
-          setIsHeroLoaded(true);
-        }, 1500);
-      };
-
-      iframe.addEventListener('load', handleIframeLoad);
-      
-      return () => {
-        iframe.removeEventListener('load', handleIframeLoad);
-      };
-    }
-  }, []);
-
   // GSAP animations for large screens
   useEffect(() => {
     const section = sectionRef.current;
     const text = textRef.current;
+    const video = videoRef.current;
+    const secondVideo = secondVideoRef.current;
 
-    if (!section || !text) return;
+    if (!section || !text || !video || !secondVideo) return;
 
     // Only run GSAP on large screens
     if (window.innerWidth < 1024) return;
@@ -51,23 +36,94 @@ export default function HeroSection() {
       const startX = 0;
       const endX = -textWidth + viewportWidth * 0.9;
 
-      gsap.set(text, { attr: { x: startX } });
+      // Get content elements
+      const logo = document.querySelector('.logo-fade');
+      const textElements = document.querySelectorAll('.text-fade');
+      const contentOverlay = contentOverlayRef.current;
 
-      gsap
-        .timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: "+=4000",
-            scrub: 1,
-            pin: true,
-            anticipatePin: 1,
-          },
-        })
-        .to(text, {
-          attr: { x: endX },
-          ease: "power1.out"
+      gsap.set(text, { attr: { x: startX } });
+      gsap.set(video, { 
+        y: 0,
+        height: "100vh",
+        width: "100vw",
+        objectFit: "cover"
+      });
+      
+      // Position second video initially below viewport
+      gsap.set(secondVideo, { 
+        y: "100vh",
+        height: "100vh",
+        width: "100vw",
+        objectFit: "cover"
+      });
+      
+      // Hide content initially and position it
+      if (logo) gsap.set(logo, { opacity: 0, y: 50 });
+      if (textElements.length) {
+        gsap.set(textElements, { opacity: 0, y: 30 });
+      }
+      if (contentOverlay) {
+        gsap.set(contentOverlay, { 
+          y: 0,
+          display: 'flex',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: "100vh"
         });
+      }
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "+=5000",
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+        },
+      });
+
+      // Text animation (first 70% of timeline) - horizontal scroll
+      tl.to(text, {
+        attr: { x: endX },
+        ease: "power1.out",
+        duration: 0.7
+      })
+      // At 70% completion, start moving second video up from bottom (overlapping with text animation)
+      .to(secondVideo, {
+        y: 0, // Move second video up to viewport
+        ease: "power2.out",
+        duration: 0.3
+      }, 0.7) // Start at 70% of timeline
+      // Change text color to black when video is 50% down (at 85% of timeline)
+      .to(text, {
+        attr: { fill: "black" },
+        ease: "none",
+        duration: 0.01
+      }, 0.85) // 70% + (30% * 0.5) = 85% of timeline
+      // Fade out the white mask simultaneously with color change
+      .to(".text-mask-rect", {
+        opacity: 0,
+        ease: "power2.out",
+        duration: 0.15
+      }, 0.85) // Start when text turns black
+      // Content fade in animation (final phase)
+      .to(logo, {
+        opacity: 1,
+        y: 0,
+        ease: "power2.out",
+        duration: 0.05
+      }, 0.9) // Start near end
+      .to(textElements, {
+        opacity: 1,
+        y: 0,
+        ease: "power2.out",
+        duration: 0.05,
+        stagger: 0.01
+      }, 0.95); // Start at very end
     });
 
     return () => {
@@ -117,14 +173,6 @@ export default function HeroSection() {
         start: "top bottom",
         end: "bottom bottom",
         scrub: 0.9,
-      
-        // onUpdate: (self) => {
-        //   const progress = self.progress;
-        //   gsap.to(textElement, {
-        //     y: progress * window.innerHeight,
-        //     duration: 0,
-        //   });
-        // }
       }
     });
 
@@ -141,7 +189,7 @@ export default function HeroSection() {
   }
 
   useEffect(() => {
-    const video = document.querySelector('video');
+    const video = videoRef.current;
     if (video) {
       video.addEventListener('loadeddata', handleVideoLoad);
       return () => {
@@ -154,95 +202,134 @@ export default function HeroSection() {
     <div
       ref={sectionRef}
       className="relative w-screen overflow-hidden"
+      style={{ height: '100vh' }} // Container height for smooth transition
     >
-      {/* Large Screens (Desktop) */}
-      <div className="h-screen">
-        <video
-          ref={iframeRef}
-          className="absolute inset-0 z-0 w-full h-full object-cover"
-          src="/media-hero.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          onLoadedData={handleVideoLoad}
-        />
+      {/* First Video Element - Main background video */}
+      <video
+        ref={videoRef}
+        className="absolute inset-0 z-0 w-screen h-screen object-cover"
+        src="/media-hero.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        onLoadedData={handleVideoLoad}
+        style={{ 
+          minWidth: '100vw',
+          minHeight: '100vh',
+          maxWidth: '100vw',
+          maxHeight: '100vh'
+        }}
+      />
 
-        <div className="absolute inset-0 z-10">
-          <div className="sticky top-0 h-screen">
-            <svg
-              className="absolute inset-0 pointer-events-none"
-              width="100%"
-              height="100%"
-            >
-              <defs>
-                <mask
-                  id="text-mask"
+      {/* Second Video Element - Animates from bottom to top */}
+      <video
+        ref={secondVideoRef}
+        className="absolute inset-0 z-5 w-screen h-screen object-cover"
+        src="/media-hero.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        style={{ 
+          minWidth: '100vw',
+          minHeight: '100vh',
+          maxWidth: '100vw',
+          maxHeight: '100vh'
+        }}
+      />
+
+      {/* Content overlay - moves with video and centers in new position */}
+      <div 
+        ref={contentOverlayRef}
+        className="absolute inset-0 flex flex-col items-center justify-center text-center z-20 px-4 pointer-events-none h-screen"
+      >
+        <div className="w-full absolute inset-0 h-full"></div>
+        
+        <img
+          src="/logo.png"
+          alt="Logo"
+          className="logo-fade w-3/4 max-w-[580px] max-h-[68px] mb-6 object-contain"
+        />
+        <p
+          className="text-fade uppercase text-white text-[15px] md:text-[18px] lg:text-[22px] mb-1"
+          style={{
+            fontFamily: "'Almarai', sans-serif",
+            fontWeight: 600,
+            letterSpacing: "0.02em",
+            lineHeight: 1.2
+          }}
+        >
+          Born from Emirati soil, our roots run deep
+        </p>
+        <p
+          className="text-fade uppercase text-white text-[16px] md:text-[18px] lg:text-[22px]"
+          style={{
+            fontFamily: "'Almarai', sans-serif",
+            fontWeight: 600,
+            letterSpacing: "0.02em",
+            lineHeight: 1.2
+          }}
+        >
+          and our vision soars high
+        </p>
+      </div>
+
+      {/* Large Screens (Desktop) */}
+      <div className="hidden lg:block">
+        <div className="h-screen relative">
+          <div className="absolute inset-0 z-10">
+            <div className="sticky top-0 h-screen">
+              <svg
+                className="absolute inset-0 pointer-events-none"
+                width="100%"
+                height="100%"
+              >
+                <defs>
+                  <mask
+                    id="text-mask"
+                    x="0"
+                    y="0"
+                    width="100%"
+                    height="100%"
+                    maskUnits="userSpaceOnUse"
+                  >
+                    <rect x="0" y="0" width="100%" height="100%" fill="white" />
+                    <text
+                      ref={textRef}
+                      x="0"
+                      y="60%"
+                      dominantBaseline="middle"
+                      fontSize="54vw"
+                      textAnchor="start"
+                      fontWeight="bold"
+                      fontFamily="inherit"
+                      fill="black"
+                      className="whitespace-nowrap"
+                    >
+                      Infocus Media
+                      <tspan fontSize="20vw" dy="-0.65em">
+                        ®
+                      </tspan>
+                    </text>
+                  </mask>
+                </defs>
+                <rect
                   x="0"
                   y="0"
                   width="100%"
                   height="100%"
-                  maskUnits="userSpaceOnUse"
-                >
-                  <rect x="0" y="0" width="100%" height="100%" fill="white" />
-                  <text
-                    ref={textRef}
-                    x="0"
-                    y="60%"
-                    dominantBaseline="middle"
-                    fontSize="54vw"
-                    textAnchor="start"
-                    fontWeight="bold"
-                    fontFamily="inherit"
-                    fill="black"
-                    className="whitespace-nowrap"
-                  >
-                    Infocus Media
-                    <tspan fontSize="20vw" dy="-0.65em">
-                      ®
-                    </tspan>
-                  </text>
-                </mask>
-              </defs>
-              <rect
-                x="0"
-                y="0"
-                width="100%"
-                height="100%"
-                fill="white"
-                mask="url(#text-mask)"
-              />
-            </svg>
+                  fill="white"
+                  mask="url(#text-mask)"
+                  className="text-mask-rect"
+                />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Tablet Screens */}
-      {/* <div 
-        className="hidden md:flex lg:hidden min-h-[160vh] h-screen bg-white flex-col justify-center items-center"
-      >
-        <div className="mt-[-17vh] flex justify-center tablet-text">
-          <h1 className="text-[55vw] font-bold text-black rotate-90 leading-none">
-            Infocus Media <span className="text-[12vw] align-super">®</span>
-          </h1>
-        </div>
-      </div> */}
-
-      {/* Mobile Screens */}
-      {/* <div 
-        className="md:hidden min-h-[330vh] h-screen bg-white flex flex-col justify-center items-center"
-      >
-        <div className="flex mt-[-5vh] justify-center mobile-text">
-          <div className="transform rotate-90 origin-center">
-            <h1 className="text-[100vw] font-bold text-black whitespace-nowrap">
-              Infocus Media <span className="text-[20vw] align-super">®</span>
-            </h1>
-          </div>
-        </div>
-      </div> */}
-
-      
     </div>
   );
 }

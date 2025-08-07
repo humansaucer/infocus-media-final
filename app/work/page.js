@@ -10,16 +10,43 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Loader from '@/components/Loader'
+import Lenis from "@studio-freight/lenis";
 
 const Page = () => {
   const [activeTab, setActiveTab] = useState("Social Media")
   
+
+  
+  useEffect(() => {
+      const lenis = new Lenis({
+        duration: 0.6, // Very short
+        easing: (t) => 1 - Math.pow(1 - t, 3), // easeOutCubic - quick stop
+        smooth: true,
+        smoothTouch: false,
+        infinite: false,
+        gestureDirection: "vertical",
+        wheelMultiplier: 0.8, // Reduce wheel sensitivity
+        touchMultiplier: 1.0,
+      });
+  
+      let frame;
+      const raf = (time) => {
+        lenis.raf(time);
+        frame = requestAnimationFrame(raf);
+      };
+      frame = requestAnimationFrame(raf);
+  
+      return () => {
+        cancelAnimationFrame(frame);
+        lenis.destroy();
+      };
+    }, []);
   
 
   
   return (
     <div className='flex flex-col px-6 pt-10'>
-      <p className='py-20 text-center text-[40px] md:text-[64px] lg:text-[64px] font-bold'>Our Works</p>
+      <p className='py-20 text-center text-[40px] md:text-[64px] lg:text-[64px] font-bold'>Our Work</p>
 
       {/* Tabs */}
       <div className='flex flex-col lg:flex-row items-center mb-3 sm:hidden'>
@@ -51,12 +78,12 @@ const Page = () => {
         >
           Social Media
         </button>
-        <button
+        {/* <button
           onClick={() => setActiveTab("Animation")}
           className={`cursor-pointer font-bold rounded-md text-[16px] md:text-[18px] lg:text-[22px] px-4 py-2 hover:bg-black hover:text-white ${activeTab === "Animation" ? "bg-black text-white" : "text-gray-700 bg-gray-200"}`}
         >
           Animation
-        </button>
+        </button> */}
 
         <button
           onClick={() => setActiveTab("Event Coverage")}
